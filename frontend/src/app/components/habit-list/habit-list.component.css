@@ -1,0 +1,11 @@
+.habit-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.no-habits {
+    text-align: center;
+    color: #666;
+    margin-top: 2rem;
+}

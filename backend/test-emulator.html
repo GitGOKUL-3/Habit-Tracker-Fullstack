@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Tester for Android Emulator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+
+        button:hover {
+            background: #5568d3;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 12px;
+        }
+
+        .success {
+            color: #48bb78;
+        }
+
+        .error {
+            color: #f56565;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🚀 API Tester for Android</h1>
+        <p>Use this page to test your Habit Tracker API from Android Emulator</p>
+
+        <div>
+            <label><strong>API Base URL:</strong></label>
+            <input type="text" id="baseUrl" value="http://10.0.2.2:3000/api">
+        </div>
+
+        <h3>Tests:</h3>
+        <button onclick="testConnection()">1. Test Connection</button>
+        <button onclick="testRegister()">2. Test Register</button>
+        <button onclick="testLogin()">3. Test Login</button>
+
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        const resultDiv = document.getElementById('result');
+
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const className = type === 'success' ? 'success' : type === 'error' ? 'error' : '';
+            resultDiv.innerHTML += `<div class="${className}">[${timestamp}] ${message}</div>`;
+        }
+
+        async function testConnection() {
+            resultDiv.innerHTML = '';
+            log('Testing connection to server...');
+
+            try {
+                const response = await fetch('http://10.0.2.2:3000/');
+                const data = await response.json();
+                log('✅ SUCCESS! Server is accessible!', 'success');
+                log(JSON.stringify(data, null, 2), 'success');
+            } catch (error) {
+                log('❌ ERROR: Cannot connect to server', 'error');
+                log(error.message, 'error');
+            }
+        }
+
+        async function testRegister() {
+            resultDiv.innerHTML = '';
+            log('Testing user registration...');
+
+            const testUser = {
+                username: 'testuser_' + Date.now(),
+                email: 'test' + Date.now() + '@example.com',
+                password: 'Test@123'
+            };
+
+            try {
+                const response = await fetch('http://10.0.2.2:3000/api/auth/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(testUser)
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    log('✅ Registration successful!', 'success');
+                    log(JSON.stringify(data, null, 2), 'success');
+                } else {
+                    log('⚠️ Registration failed', 'error');
+                    log(JSON.stringify(data, null, 2), 'error');
+                }
+            } catch (error) {
+                log('❌ ERROR: Cannot connect to server', 'error');
+                log(error.message, 'error');
+            }
+        }
+
+        async function testLogin() {
+            resultDiv.innerHTML = '';
+            log('Testing login with admin credentials...');
+
+            const credentials = {
+                email: 'admin@example.com',
+                password: 'admin123'
+            };
+
+            try {
+                const response = await fetch('http://10.0.2.2:3000/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(credentials)
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    log('✅ Login successful!', 'success');
+                    log('Token: ' + data.token, 'success');
+                    log(JSON.stringify(data, null, 2), 'success');
+                } else {
+                    log('⚠️ Login failed', 'error');
+                    log(JSON.stringify(data, null, 2), 'error');
+                }
+            } catch (error) {
+                log('❌ ERROR: Cannot connect to server', 'error');
+                log(error.message, 'error');
+            }
+        }
+    </script>
+</body>
+
+</html>

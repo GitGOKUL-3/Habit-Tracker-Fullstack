@@ -1,0 +1,85 @@
+<div class="dashboard-container">
+    <header>
+        <h1>Welcome {{ user?.username }}</h1>
+
+        <div class="profile-section">
+            <button class="profile-btn" (click)="toggleProfileMenu()">
+                <div class="avatar">{{ user?.username?.charAt(0) | uppercase }}</div>
+                <span>Profile</span>
+            </button>
+
+            <div class="dropdown-menu" *ngIf="showProfileMenu">
+                <div class="menu-header">
+                    <strong>{{ user?.username }}</strong>
+                    <span>Level {{ user?.level }}</span>
+                </div>
+                <button class="logout-item" (click)="openSettings()">
+                    ⚙️ Settings
+                </button>
+                <button (click)="logout()" class="logout-item">🚪 Logout</button>
+            </div>
+        </div>
+    </header>
+
+
+
+    <!-- Gamification Section -->
+    <div class="stats-container fade-in">
+        <div class="profile-card">
+            <div class="level-badge" [style.font-size]="user?.avatar ? '2rem' : '1.5rem'">
+                {{ user?.avatar || (user?.level || 1) }}
+            </div>
+            <div class="user-info">
+                <h2>{{ user?.username }} <small style="font-size: 0.9rem; color: #888;">Level {{ user?.level || 1
+                        }}</small></h2>
+                <p class="bio" *ngIf="user?.bio" style="font-style: italic; color: #666; margin-bottom: 5px;">"{{
+                    user?.bio }}"</p>
+                <div class="xp-bar-container">
+                    <div class="xp-bar" [style.width.%]="(user?.current_xp || 0) % 100"></div>
+                </div>
+                <p>XP: {{ user?.current_xp }} / {{ (user?.level || 1) * 100 }}</p>
+            </div>
+        </div>
+
+        <div class="quote-card">
+            <h3>Daily Motivation</h3>
+            <p>"{{ quote }}"</p>
+        </div>
+    </div>
+
+    <!-- Tab Navigation -->
+    <div class="tabs-header fade-in">
+        <div class="dashboard-tabs">
+            <button [class.active]="activeTab === 'habits'" (click)="switchTab('habits')">
+                <span style="font-size: 1.2rem;">📝</span> Today's Habits
+            </button>
+            <button [class.active]="activeTab === 'progress'" (click)="switchTab('progress')">
+                <span style="font-size: 1.2rem;">📈</span> My Progress
+            </button>
+        </div>
+        <button class="add-btn" *ngIf="activeTab === 'habits'" (click)="toggleAddModal()">+ Add New Habit</button>
+    </div>
+
+    <!-- Tab Content -->
+    <div class="tab-content">
+        <div *ngIf="activeTab === 'habits'" class="fade-in">
+            <app-habit-list></app-habit-list>
+        </div>
+
+        <div *ngIf="activeTab === 'progress'" class="fade-in">
+            <app-habit-chart></app-habit-chart>
+        </div>
+    </div>
+
+    <!-- Add Habit Modal -->
+    <div *ngIf="showAddModal" class="modal-backdrop">
+        <div class="modal">
+            <button (click)="toggleAddModal()" class="close-btn">X</button>
+            <app-add-habit (habitAdded)="onHabitAdded()"></app-add-habit>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <app-settings *ngIf="showSettings" [user]="user" (close)="closeSettings()" (saved)="onSettingsSaved()">
+    </app-settings>
+</div>

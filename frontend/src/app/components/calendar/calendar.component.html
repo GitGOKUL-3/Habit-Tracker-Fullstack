@@ -1,0 +1,22 @@
+<div class="calendar-container">
+    <div class="header">
+        <button (click)="prevMonth()">&lt;</button>
+        <h3>{{ monthName }} {{ year }}</h3>
+        <button (click)="nextMonth()">&gt;</button>
+    </div>
+    <div class="grid header-days">
+        <div>Su</div>
+        <div>Mo</div>
+        <div>Tu</div>
+        <div>We</div>
+        <div>Th</div>
+        <div>Fr</div>
+        <div>Sa</div>
+    </div>
+    <div class="grid body-days">
+        <div *ngFor="let pad of paddingDays" class="day empty"></div>
+        <div *ngFor="let day of daysInMonth" class="day" [class.completed]="isCompleted(day)">
+            {{ day }}
+        </div>
+    </div>
+</div>

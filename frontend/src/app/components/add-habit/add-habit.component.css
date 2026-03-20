@@ -1,0 +1,65 @@
+h3 {
+    margin-top: 0;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #666;
+}
+
+input,
+textarea,
+select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+button {
+    width: 100%;
+    padding: 0.8rem;
+    background: #2196f3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:disabled {
+    background: #ccc;
+}
+
+.days-selector {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.day-btn {
+    width: auto;
+    flex: 1;
+    padding: 8px;
+    background: #f0f0f0;
+    color: #666;
+    border: 1px solid #ddd;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.day-btn.selected {
+    background: #764ba2;
+    color: white;
+    border-color: #764ba2;
+}
+
+.day-btn:hover:not(.selected) {
+    background: #e0e0e0;
+}

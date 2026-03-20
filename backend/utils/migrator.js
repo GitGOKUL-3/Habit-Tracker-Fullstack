@@ -1,0 +1,66 @@
+const pool = require('../config/db');
+
+async function runMigrations() {
+    console.log('Running migrations...');
+    try {
+        const connection = await pool.getConnection();
+
+        // 1. Add columns to users table
+        const [usersColumns] = await connection.query("SHOW COLUMNS FROM users LIKE 'level'");
+        if (usersColumns.length === 0) {
+            console.log('Adding gamification columns to users table...');
+            await connection.query("ALTER TABLE users ADD COLUMN level INT DEFAULT 1");
+            await connection.query("ALTER TABLE users ADD COLUMN current_xp INT DEFAULT 0");
+        }
+
+        const [bioColumn] = await connection.query("SHOW COLUMNS FROM users LIKE 'bio'");
+        if (bioColumn.length === 0) {
+            console.log('Adding bio and avatar columns to users table...');
+            await connection.query("ALTER TABLE users ADD COLUMN bio TEXT");
+            await connection.query("ALTER TABLE users ADD COLUMN avatar VARCHAR(50) DEFAULT '👤'");
+        }
+
+        const [roleColumn] = await connection.query("SHOW COLUMNS FROM users LIKE 'role'");
+        if (roleColumn.length === 0) {
+            console.log('Adding role column to users table...');
+            await connection.query("ALTER TABLE users ADD COLUMN role ENUM('user', 'admin') DEFAULT 'user'");
+        }
+
+        // 2. Add columns to habits table
+        console.log('Updating habits table schema...');
+        await connection.query("ALTER TABLE habits MODIFY COLUMN frequency ENUM('daily', 'weekly', 'custom', 'hourly') DEFAULT 'daily'");
+
+        const [habitsColumns] = await connection.query("SHOW COLUMNS FROM habits LIKE 'current_streak'");
+        if (habitsColumns.length === 0) {
+            console.log('Adding gamification columns to habits table...');
+            await connection.query("ALTER TABLE habits ADD COLUMN current_streak INT DEFAULT 0");
+            await connection.query("ALTER TABLE habits ADD COLUMN longest_streak INT DEFAULT 0");
+        }
+
+        const [customDaysColumn] = await connection.query("SHOW COLUMNS FROM habits LIKE 'custom_days'");
+        if (customDaysColumn.length === 0) {
+            console.log('Adding custom_days column to habits table...');
+            await connection.query("ALTER TABLE habits ADD COLUMN custom_days VARCHAR(50)");
+        }
+
+        const [targetCountColumn] = await connection.query("SHOW COLUMNS FROM habits LIKE 'target_count'");
+        if (targetCountColumn.length === 0) {
+            console.log('Adding target_count column to habits table...');
+            await connection.query("ALTER TABLE habits ADD COLUMN target_count INT DEFAULT 1");
+        }
+
+        const [completionsColumn] = await connection.query("SHOW COLUMNS FROM habit_logs LIKE 'completions'");
+        if (completionsColumn.length === 0) {
+            console.log('Adding completions column to habit_logs table...');
+            await connection.query("ALTER TABLE habit_logs ADD COLUMN completions INT DEFAULT 1");
+            await connection.query("UPDATE habit_logs SET completions = 1 WHERE completions IS NULL");
+        }
+
+        connection.release();
+        console.log('Migrations completed successfully.');
+    } catch (error) {
+        console.error('Migration failed:', error);
+    }
+}
+
+module.exports = runMigrations;

@@ -1,0 +1,48 @@
+<div class="habit-card" [class.completed]="habit.today_status === 'completed'">
+    <div class="habit-main">
+        <div class="habit-info">
+            <h4>{{ habit.name }}</h4>
+            <p>{{ habit.description }}</p>
+            <span class="frequency-badge">{{ habit.frequency }}</span>
+            <span class="streak-badge" *ngIf="habit.current_streak && habit.current_streak > 0">🔥 {{
+                habit.current_streak
+                }}</span>
+        </div>
+
+        <div class="habit-actions">
+            <!-- Counter for hourly habits -->
+            <div class="counter-container" *ngIf="habit.frequency === 'hourly' && !showDeleteConfirm">
+                <span class="count-text">{{ habit.completions_today || 0 }} / {{ habit.target_count || 1 }}</span>
+                <button class="plus-btn" [class.done]="(habit.completions_today || 0) >= (habit.target_count || 1)"
+                    (click)="toggleComplete()">
+                    +
+                </button>
+            </div>
+
+            <!-- Standard Check button for others -->
+            <button class="check-btn" *ngIf="habit.frequency !== 'hourly' && !showDeleteConfirm"
+                [class.done]="habit.today_status === 'completed'" (click)="toggleComplete()">
+                {{ habit.today_status === 'completed' ? '✓ Done' : 'Check' }}
+            </button>
+
+            <button class="delete-btn" (click)="initiateDelete()">Delete</button>
+        </div>
+    </div>
+
+    <div class="heatmap-container">
+        <div class="heatmap-day" *ngFor="let day of heatmapDays" [class.completed]="day.status === 'completed'"
+            [class.skipped]="day.status === 'skipped'" [title]="day.date + ': ' + day.status">
+        </div>
+    </div>
+</div>
+
+<div class="modal-backdrop" *ngIf="showDeleteConfirm">
+    <div class="modal">
+        <h3>Delete Habit?</h3>
+        <p>Are you sure you want to delete "{{ habit.name }}"?</p>
+        <div class="modal-actions">
+            <button class="btn-cancel" (click)="cancelDelete()">Cancel</button>
+            <button class="btn-confirm" (click)="deleteHabit()">Delete</button>
+        </div>
+    </div>
+</div>

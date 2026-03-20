@@ -1,0 +1,119 @@
+<div class="modal-backdrop" (click)="onClose()">
+    <div class="modal" (click)="$event.stopPropagation()">
+
+        <!-- Header / Close -->
+        <div class="modal-header">
+            <h2>Settings</h2>
+            <button class="close-btn" (click)="onClose()">×</button>
+        </div>
+
+        <!-- Sidebar / Tabs (Desktop: Side, Mobile: Top) -->
+        <div class="settings-layout">
+            <div class="sidebar">
+                <button [class.active]="activeTab === 'profile'" (click)="switchTab('profile')">
+                    👤 Profile
+                </button>
+                <button [class.active]="activeTab === 'appearance'" (click)="switchTab('appearance')">
+                    🎨 Appearance
+                </button>
+                <button [class.active]="activeTab === 'account'" (click)="switchTab('account')">
+                    🔐 Account
+                </button>
+            </div>
+
+            <!-- Content Area -->
+            <div class="content">
+
+                <!-- PROFILE TAB -->
+                <div *ngIf="activeTab === 'profile'" class="tab-pane fade-in">
+                    <h3>Edit Profile</h3>
+
+                    <div class="form-group avatar-section">
+                        <div class="avatar-preview">{{ selectedAvatar }}</div>
+                        <div class="avatar-grid">
+                            <button *ngFor="let av of avatars" class="avatar-option"
+                                [class.selected]="av === selectedAvatar" (click)="selectAvatar(av)">
+                                {{ av }}
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" [(ngModel)]="username" placeholder="Username">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Bio / Motto</label>
+                        <textarea [(ngModel)]="bio" placeholder="What keeps you going?" rows="3"></textarea>
+                    </div>
+
+                    <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+
+                    <div class="actions">
+                        <button class="btn-primary" (click)="saveProfile()" [disabled]="isLoading">
+                            {{ isLoading ? 'Saving...' : 'Save Profile' }}
+                        </button>
+                    </div>
+                </div>
+
+                <!-- APPEARANCE TAB -->
+                <div *ngIf="activeTab === 'appearance'" class="tab-pane fade-in">
+                    <h3>Appearance</h3>
+
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <label>Dark Mode</label>
+                            <p>Switch between light and dark themes.</p>
+                        </div>
+                        <div class="toggle-switch" [class.checked]="isDarkMode" (click)="toggleTheme()">
+                            <div class="slider"></div>
+                        </div>
+                    </div>
+
+                    <!-- Placeholder for future settings -->
+                    <!-- 
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <label>Accent Color</label>
+                            <p>Choose your favorite color.</p>
+                        </div>
+                        <div class="color-picker">...</div>
+                    </div>
+                    -->
+                </div>
+
+                <!-- ACCOUNT TAB -->
+                <div *ngIf="activeTab === 'account'" class="tab-pane fade-in">
+                    <h3>Security</h3>
+
+                    <div class="form-group">
+                        <label>Current Password</label>
+                        <input type="password" [(ngModel)]="currentPassword" placeholder="••••••••">
+                    </div>
+
+                    <div class="form-group">
+                        <label>New Password</label>
+                        <input type="password" [(ngModel)]="newPassword" placeholder="••••••••">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Confirm New Password</label>
+                        <input type="password" [(ngModel)]="confirmPassword" placeholder="••••••••">
+                    </div>
+
+                    <div class="error-message" *ngIf="passwordError">{{ passwordError }}</div>
+
+
+                    <div class="actions">
+                        <button class="btn-primary danger" (click)="changePassword()" [disabled]="isLoading">
+                            Change Password
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

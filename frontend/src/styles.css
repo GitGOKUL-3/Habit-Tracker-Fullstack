@@ -1,0 +1,76 @@
+:root {
+    /* Light Theme Defaults */
+    --bg-primary: #f4f7fa;
+    --bg-secondary: #ffffff;
+    --bg-tertiary: #f8f9fa;
+    --text-primary: #2d3748;
+    --text-secondary: #718096;
+    --text-tertiary: #a0aec0;
+    --accent-primary: #667eea;
+    --accent-hover: #5a67d8;
+    --accent-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    --modal-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    --border-color: #e2e8f0;
+    --success-color: #48bb78;
+    --danger-color: #f56565;
+    --input-bg: #fff;
+}
+
+body.dark-theme {
+    /* Dark Theme Overrides - Comfort / Soft Slate */
+    --bg-primary: #1e293b;
+    /* Slate 800 (Lighter base) */
+    --bg-secondary: #334155;
+    /* Slate 700 (Lighter cards) */
+    --bg-tertiary: #475569;
+    /* Slate 600 */
+    --text-primary: #e2e8f0;
+    /* Slate 200 (Softer white) */
+    --text-secondary: #cbd5e1;
+    /* Slate 300 */
+    --text-tertiary: #94a3b8;
+    /* Slate 400 */
+    --accent-primary: #818cf8;
+    /* Indigo 400 */
+    --accent-hover: #a5b4fc;
+    /* Indigo 300 */
+    --accent-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+    --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.25);
+    --modal-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+    --border-color: #475569;
+    --success-color: #4ade80;
+    --danger-color: #f87171;
+    --input-bg: #1e293b;
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Common Utilities */
+.btn-primary {
+    background: var(--accent-gradient);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: transform 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+}
+
+.card {
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    box-shadow: var(--card-shadow);
+    padding: 20px;
+}

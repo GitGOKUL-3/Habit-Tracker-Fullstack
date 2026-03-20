@@ -1,0 +1,13 @@
+<div class="habit-list-container">
+    <app-skeleton-loader [visible]="isLoading"></app-skeleton-loader>
+
+    <div *ngIf="!isLoading && habits.length === 0" class="empty-state">
+        <p>No habits for today yet! 🌱</p>
+    </div>
+
+    <div class="habit-list" *ngIf="!isLoading">
+        <app-habit-item *ngFor="let habit of habits; trackBy: trackByHabitId" [habit]="habit"
+            (updated)="onHabitUpdated()">
+        </app-habit-item>
+    </div>
+</div>

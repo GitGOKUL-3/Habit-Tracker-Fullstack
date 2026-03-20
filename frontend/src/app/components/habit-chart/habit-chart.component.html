@@ -1,0 +1,25 @@
+<app-chart-skeleton *ngIf="isLoading"></app-chart-skeleton>
+
+<div class="charts-grid fade-in" *ngIf="!isLoading">
+    <!-- Today's Focus (Doughnut) -->
+    <div class="chart-card doughnut-card">
+        <h3>🎯 Today's Focus</h3>
+        <div class="chart-wrapper doughnut-wrapper">
+            <canvas baseChart [data]="doughnutChartData" [options]="doughnutChartOptions" [type]="'doughnut'">
+            </canvas>
+            <div class="center-text">
+                <span class="percentage">{{ todayProgress }}%</span>
+                <span class="label">Done</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Weekly Activity (Bar) -->
+    <div class="chart-card">
+        <h3>📊 Weekly Activity</h3>
+        <div class="chart-wrapper">
+            <canvas baseChart [data]="barChartData" [options]="barChartOptions" [type]="'bar'">
+            </canvas>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,42 @@
+<div class="add-habit-container">
+    <h3>Create New Habit</h3>
+    <form [formGroup]="habitForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="name">Habit Name</label>
+            <input type="text" id="name" formControlName="name" placeholder="e.g. Drink Water">
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description (Optional)</label>
+            <textarea id="description" formControlName="description" rows="3"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="frequency">Frequency</label>
+            <select id="frequency" formControlName="frequency">
+                <option value="hourly">Hourly (Repeated)</option>
+                <option value="daily">Daily</option>
+                <option value="weekly">Weekly</option>
+                <option value="custom">Custom (Specific Days)</option>
+            </select>
+        </div>
+
+        <div class="form-group" *ngIf="habitForm.get('frequency')?.value === 'hourly'">
+            <label for="target_count">Target per day</label>
+            <input type="number" id="target_count" formControlName="target_count" min="1">
+            <small>How many times do you want to do this each day?</small>
+        </div>
+
+        <div class="form-group" *ngIf="habitForm.get('frequency')?.value === 'custom'">
+            <label>Repeat on:</label>
+            <div class="days-selector">
+                <button type="button" *ngFor="let day of days" [class.selected]="selectedDays.includes(day.value)"
+                    (click)="toggleDay(day.value)" class="day-btn">
+                    {{ day.name }}
+                </button>
+            </div>
+        </div>
+
+        <button type="submit" [disabled]="habitForm.invalid">Add Habit</button>
+    </form>
+</div>
