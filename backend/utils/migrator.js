@@ -1,3 +1,4 @@
+// v2 - includes CREATE TABLE IF NOT EXISTS for fresh Railway deploys
 const pool = require('../config/db');
 
 async function runMigrations() {
