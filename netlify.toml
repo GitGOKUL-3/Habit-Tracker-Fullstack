@@ -2,7 +2,3 @@
   base = "frontend"
   command = "npm install --legacy-peer-deps && npm run build"
   publish = "dist/frontend/browser"
-
-[[plugins]]
-  package = "@netlify/angular-runtime"
-  enabled = false
