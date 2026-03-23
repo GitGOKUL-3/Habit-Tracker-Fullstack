@@ -249,3 +249,16 @@
     position: relative;
     z-index: 2;
 }
+
+@media (max-width: 480px) {
+    .habit-main {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .habit-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+}

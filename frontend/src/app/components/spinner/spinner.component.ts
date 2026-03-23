@@ -7,7 +7,10 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   template: `
     <div class="loading-overlay" *ngIf="visible">
-        <div class="spinner"></div>
+        <div class="spinner-wrapper">
+            <div class="spinner-ring"></div>
+            <div class="spinner-core"></div>
+        </div>
     </div>
   `,
   styles: [`

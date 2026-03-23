@@ -162,8 +162,14 @@ exports.logHabit = async (req, res) => {
             let currentStreak = 0;
             if (logs.length > 0) {
                 const dates = logs.map(l => new Date(l.completion_date).toISOString().split('T')[0]);
-                const todayDate = new Date().toISOString().split('T')[0];
-                const yesterdayDate = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+                
+                // Use user's local date sent in the request instead of server time 
+                const userLocalToday = new Date(date);
+                const userLocalYesterday = new Date(userLocalToday);
+                userLocalYesterday.setDate(userLocalToday.getDate() - 1);
+                
+                const todayDate = userLocalToday.toISOString().split('T')[0];
+                const yesterdayDate = userLocalYesterday.toISOString().split('T')[0];
 
                 // If the most recent log is today or yesterday, streak is alive
                 if (dates[0] === todayDate || dates[0] === yesterdayDate) {
@@ -255,6 +261,7 @@ exports.getTodayHabits = async (req, res) => {
             WHERE h.user_id = ? 
             AND (
                 h.frequency = 'daily' 
+                OR h.frequency = 'weekly'
                 OR (h.frequency = 'custom' AND FIND_IN_SET(?, h.custom_days))
                 OR h.frequency = 'hourly'
             )

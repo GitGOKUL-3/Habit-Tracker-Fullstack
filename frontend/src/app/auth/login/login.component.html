@@ -1,28 +1,54 @@
-<div class="auth-container">
-  <h2>Login</h2>
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input type="email" id="email" formControlName="email">
-      <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="error">
-        Valid email is required
+<div class="auth-wrapper">
+  <div class="auth-container" style="position: relative;">
+    <app-spinner [visible]="isLoading"></app-spinner>
+    
+    <div class="auth-header">
+      <div class="auth-logo">
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="url(#paint0_linear)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <defs>
+            <linearGradient id="paint0_linear" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#667eea"/>
+              <stop offset="1" stop-color="#764ba2"/>
+            </linearGradient>
+          </defs>
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+        </svg>
       </div>
+      <h2>Welcome Back</h2>
+      <p class="auth-subtitle">Continue your journey to better habits.</p>
     </div>
 
-    <div class="form-group">
-      <label for="password">Password</label>
-      <input type="password" id="password" formControlName="password">
-      <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="error">
-        Password is required
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <div class="input-wrapper">
+          <input type="email" id="email" formControlName="email" placeholder="you@example.com">
+        </div>
+        <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="error">
+          Valid email is required.
+        </div>
       </div>
-    </div>
 
-    <div *ngIf="errorMessage" class="error-banner">
-      <span *ngIf="!showAdminLink">{{ errorMessage }}</span>
-      <a *ngIf="showAdminLink" routerLink="/admin/login" class="admin-link">{{ errorMessage }}</a>
-    </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <div class="input-wrapper">
+          <input type="password" id="password" formControlName="password" placeholder="••••••••">
+        </div>
+        <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="error">
+          Password is required.
+        </div>
+      </div>
 
-    <button type="submit" [disabled]="loginForm.invalid">Login</button>
-  </form>
-  <p>Don't have an account? <a routerLink="/register">Register</a></p>
+      <div *ngIf="errorMessage" class="error-banner">
+        <span *ngIf="!showAdminLink">{{ errorMessage }}</span>
+        <a *ngIf="showAdminLink" routerLink="/admin/login" class="admin-link">{{ errorMessage }}</a>
+      </div>
+
+      <button type="submit" [disabled]="loginForm.invalid" class="btn-primary login-btn">Sign In</button>
+    </form>
+    
+    <div class="auth-footer">
+      <p>Don't have an account? <a routerLink="/register">Create one</a></p>
+    </div>
+  </div>
 </div>

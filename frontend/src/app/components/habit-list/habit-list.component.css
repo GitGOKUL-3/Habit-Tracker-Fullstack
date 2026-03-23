@@ -9,3 +9,23 @@
     color: #666;
     margin-top: 2rem;
 }
+
+app-habit-item {
+    animation: slideUpFade 0.4s ease forwards;
+    opacity: 0;
+    transform: translateY(15px);
+}
+
+app-habit-item:nth-child(1) { animation-delay: 0.05s; }
+app-habit-item:nth-child(2) { animation-delay: 0.1s; }
+app-habit-item:nth-child(3) { animation-delay: 0.15s; }
+app-habit-item:nth-child(4) { animation-delay: 0.2s; }
+app-habit-item:nth-child(5) { animation-delay: 0.25s; }
+app-habit-item:nth-child(n+6) { animation-delay: 0.3s; }
+
+@keyframes slideUpFade {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
