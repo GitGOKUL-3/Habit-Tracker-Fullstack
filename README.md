@@ -1,19 +1,46 @@
-# Habit Tracker Full Stack Project
+✨ Habit Tracker Full Stack ✨
 
-A complete full-stack web application for tracking personal habits.
+A modern, comprehensive full-stack habit tracking application designed to help users build and maintain life-altering habits through gamification and data-driven insights.
+
+---
+
+## Live Demo
+**Frontend:** [Live Application (Netlify)](https://haabit-traacker.netlify.app/login)
+**Backend API:** [API Endpoint (Render)](https://habit-tracker-fullstack-kdoe.onrender.com)
+
+> [!TIP]
+> Use the demo account `testuser` / `password123` or create your own to start tracking!
+
+---
 
 ## Tech Stack
-- **Frontend:** Angular
-- **Backend:** Node.js, Express
-- **Database:** MySQL
-- **Security:** JWT (JSON Web Tokens)
+
+### Frontend
+**Framework:** [Angular 19]
+**Visualizations:** [Chart.js] & [ng2-charts]
+**Styling:** CSS3 & Angular Material / CDK
+**Architecture:** Component-based UI with RXJS for state management
+
+### Backend
+**Core:** [Node.js] & [Express.js]
+**Database:** [MySQL]
+**Authentication:** [JWT (JSON Web Tokens)]
+**Security:** Bcrypt for password hashing
+
+---
 
 ## Features
-- **Authentication:** Secure user registration and login
-- **Habit Tracking:** Daily, weekly, and hourly habit management
-- **Charts:** Visual progress tracking and completion analytics
-- **Gamification:** Earn XP, build streaks, and level up
-- **Admin Panel:** Separate dashboard for managing users 
+
+- **Secure Authentication:** Full user registration, login, and protected routes using JWT.
+- **Smart Tracking:** Manage daily, weekly, and even hourly habits with an intuitive interface.
+- **Interactive Analytics:** High-performance charts powered by Chart.js to visualize your completion rates over time.
+- **Gamified Experience:** Stay motivated with XP rewards, level progression, and habit streak tracking.
+- **Admin Dashboard:** Comprehensive management panel for users and global habit settings.
+- **Responsive Design:** Seamless experience across desktop and mobile devices.
+
+---
+
+## Getting Started
 
 ## How to Run
 
@@ -42,3 +69,29 @@ A complete full-stack web application for tracking personal habits.
    npm start
    ```
 3. Open your browser to `http://localhost:4200`
+
+
+## Project Structure
+
+```text
+Habit-Tracker/
+├── backend/            # Express.js Server & APIs
+│   ├── config/         # DB Connections
+│   ├── controllers/    # Business Logic
+│   ├── routes/         # API Route Handlers
+│   └── utils/          # Helper functions
+├── frontend/           # Angular Application
+│   ├── src/app/        # Core Components & Services
+│   └── environments/   # App Configuration
+└── netlify.toml        # Deployment Config
+```
+
+---
+
+## Contributing
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+<!-- ## License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details. -->
+
+---
