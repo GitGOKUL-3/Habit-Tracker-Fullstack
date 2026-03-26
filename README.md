@@ -6,7 +6,7 @@ A modern, comprehensive full-stack habit tracking application designed to help u
 
 ## Live Demo
 
-**Frontend:** <a href="https://haabit-traacker.netlify.app/login" target="_blank" rel="noopener noreferrer">Live Application (Netlify)</a>  
+**Frontend:** <a href="https://haabit-traacker.netlify.app/login" target="_blank" >Live Application (Netlify)</a>  
 **Backend API:** <a href="https://habit-tracker-fullstack-kdoe.onrender.com" target="_blank">API Endpoint (Render)</a>
 
 
