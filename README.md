@@ -5,8 +5,10 @@ A modern, comprehensive full-stack habit tracking application designed to help u
 ---
 
 ## Live Demo
-**Frontend:** [Live Application (Netlify)](https://haabit-traacker.netlify.app/login)
-**Backend API:** [API Endpoint (Render)](https://habit-tracker-fullstack-kdoe.onrender.com)
+
+**Frontend:** <a href="https://haabit-traacker.netlify.app/login" target="_blank" rel="noopener noreferrer">Live Application (Netlify)</a>  
+**Backend API:** <a href="https://habit-tracker-fullstack-kdoe.onrender.com" target="_blank">API Endpoint (Render)</a>
+
 
 > [!TIP]
 > Use the demo account `testuser` / `password123` or create your own to start tracking!
