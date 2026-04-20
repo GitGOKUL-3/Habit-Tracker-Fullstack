@@ -1,4 +1,4 @@
-// v2 - includes CREATE TABLE IF NOT EXISTS for fresh Railway deploys
+// v3 - TiDB Cloud compatible; guards all ALTER TABLE statements
 const pool = require('../config/db');
 
 async function runMigrations() {
@@ -76,7 +76,14 @@ async function runMigrations() {
         }
 
         // 2. Add columns to habits table
-        await connection.query("ALTER TABLE habits MODIFY COLUMN frequency ENUM('daily', 'weekly', 'custom', 'hourly') DEFAULT 'daily'");
+        // Guard the MODIFY COLUMN so it only runs when the ENUM needs updating.
+        // TiDB (and strict MySQL) may error if you run MODIFY COLUMN redundantly.
+        const [freqColInfo] = await connection.query("SHOW COLUMNS FROM habits LIKE 'frequency'");
+        const freqType = freqColInfo.length > 0 ? freqColInfo[0].Type : '';
+        if (!freqType.includes('custom') || !freqType.includes('hourly')) {
+            console.log('Updating frequency ENUM on habits table...');
+            await connection.query("ALTER TABLE habits MODIFY COLUMN frequency ENUM('daily', 'weekly', 'custom', 'hourly') DEFAULT 'daily'");
+        }
 
         const [habitsColumns] = await connection.query("SHOW COLUMNS FROM habits LIKE 'current_streak'");
         if (habitsColumns.length === 0) {
@@ -108,6 +115,8 @@ async function runMigrations() {
         console.log('Migrations completed successfully.');
     } catch (error) {
         console.error('Migration failed:', error);
+        // Always release connection even on failure to avoid pool exhaustion
+        try { connection.release(); } catch (_) {}
     }
 }
 
